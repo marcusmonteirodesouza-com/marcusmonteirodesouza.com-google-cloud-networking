@@ -1,5 +1,6 @@
 terraform {
   backend "gcs" {
-    prefix = "networking"
+    prefix       = "networking"
+    lock_timeout = "60m"
   }
 }
