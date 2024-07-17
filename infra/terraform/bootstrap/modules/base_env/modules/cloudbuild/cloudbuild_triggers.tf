@@ -20,8 +20,11 @@ resource "google_cloudbuild_trigger" "plan" {
   }
 
   substitutions = {
-    _NAMING_CONVENTION_SUFFIX = var.naming_convention.suffix
-    _TFSTATE_BUCKET           = var.tfstate_bucket
+    _NAMING_CONVENTION_ENVIRONMENT_CODE = var.naming_convention.environment_code
+    _NAMING_CONVENTION_PREFIX           = var.naming_convention.prefix
+    _NAMING_CONVENTION_SUFFIX           = var.naming_convention.suffix
+    _NAMING_CONVENTION_PROJECT          = var.naming_convention.project
+    _TFSTATE_BUCKET                     = var.tfstate_bucket
   }
 }
 
@@ -43,7 +46,10 @@ resource "google_cloudbuild_trigger" "apply" {
   }
 
   substitutions = {
-    _NAMING_CONVENTION_SUFFIX = var.naming_convention.suffix
-    _TFSTATE_BUCKET           = var.tfstate_bucket
+    _NAMING_CONVENTION_ENVIRONMENT_CODE = var.naming_convention.environment_code
+    _NAMING_CONVENTION_PREFIX           = var.naming_convention.prefix
+    _NAMING_CONVENTION_SUFFIX           = var.naming_convention.suffix
+    _NAMING_CONVENTION_PROJECT          = var.naming_convention.project
+    _TFSTATE_BUCKET                     = var.tfstate_bucket
   }
 }
