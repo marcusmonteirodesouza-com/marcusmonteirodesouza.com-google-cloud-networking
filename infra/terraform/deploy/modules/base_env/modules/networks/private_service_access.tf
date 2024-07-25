@@ -1,5 +1,5 @@
 module "global_address_private_service_access_naming" {
-  source = "../../../modules/naming"
+  source = "../../../../../modules/naming"
 
   description = "privsvccaccess"
   environment = var.environment

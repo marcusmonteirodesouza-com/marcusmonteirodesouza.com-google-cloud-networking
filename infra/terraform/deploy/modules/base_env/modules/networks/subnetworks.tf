@@ -1,5 +1,5 @@
 module "subnetwork_shared_us_central1_default_naming" {
-  source = "../../../modules/naming"
+  source = "../../../../../modules/naming"
 
   description = "default"
   environment = var.environment
@@ -20,7 +20,7 @@ resource "google_compute_subnetwork" "shared_us_central1_default" {
 }
 
 module "subnetwork_shared_northamerica_northeast1_default_naming" {
-  source = "../../../modules/naming"
+  source = "../../../../../modules/naming"
 
   description = "default"
   environment = var.environment

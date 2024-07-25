@@ -1,5 +1,5 @@
 module "network_shared_naming" {
-  source = "../../../modules/naming"
+  source = "../../../../../modules/naming"
 
   description = "shared"
   environment = var.environment
