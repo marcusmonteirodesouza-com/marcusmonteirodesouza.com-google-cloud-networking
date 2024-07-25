@@ -10,6 +10,11 @@ variable "cloudbuild_sa_email" {
   sensitive   = true
 }
 
+variable "environment" {
+  type        = string
+  description = "Environment name (development, nonproduction, production)."
+}
+
 variable "github_repo_owner" {
   type        = string
   description = "Github repository owner."
@@ -36,15 +41,6 @@ variable "is_approval_required" {
 variable "is_tag_deployment" {
   type        = bool
   description = "Is tag deployment."
-}
-
-variable "naming_convention" {
-  type = object({
-    environment_code = string
-    prefix           = string
-    project          = string
-  })
-  description = "Resource naming convention."
 }
 
 variable "project_id" {

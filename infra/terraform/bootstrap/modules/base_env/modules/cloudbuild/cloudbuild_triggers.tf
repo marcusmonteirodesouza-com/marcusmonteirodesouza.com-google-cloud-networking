@@ -2,8 +2,17 @@ locals {
   cloudbuild_trigger_service_account = "projects/${var.project_id}/serviceAccounts/${var.cloudbuild_sa_email}"
 }
 
+module "cloudbuild_trigger_plan_naming" {
+  source = "../../../../../modules/naming"
+
+  description = "plan"
+  environment = var.environment
+  location    = "us-central1"
+  resource    = "cloudbuild-trigger"
+}
+
 resource "google_cloudbuild_trigger" "plan" {
-  name        = "${local.naming_prefix}-us-c1-cbt-plan-${var.naming_convention.suffix}"
+  name        = module.cloudbuild_trigger_plan_naming.name
   description = "Plan - ${var.github_repo_owner}/${var.github_repo_name} PR to 'main'"
   location    = "us-central1"
 
@@ -20,16 +29,22 @@ resource "google_cloudbuild_trigger" "plan" {
   }
 
   substitutions = {
-    _NAMING_CONVENTION_ENVIRONMENT_CODE = var.naming_convention.environment_code
-    _NAMING_CONVENTION_PREFIX           = var.naming_convention.prefix
-    _NAMING_CONVENTION_SUFFIX           = var.naming_convention.suffix
-    _NAMING_CONVENTION_PROJECT          = var.naming_convention.project
-    _TFSTATE_BUCKET                     = var.tfstate_bucket
+    _ENVIRONMENT    = var.environment
+    _TFSTATE_BUCKET = var.tfstate_bucket
   }
 }
 
+module "cloudbuild_trigger_apply_naming" {
+  source = "../../../../../modules/naming"
+
+  description = "apply"
+  environment = var.environment
+  location    = "us-central1"
+  resource    = "cloudbuild-trigger"
+}
+
 resource "google_cloudbuild_trigger" "apply" {
-  name        = "${local.naming_prefix}-us-c1-cbt-apply-${var.naming_convention.suffix}"
+  name        = module.cloudbuild_trigger_apply_naming.name
   description = "Apply - ${var.github_repo_owner}/${var.github_repo_name} push to 'main'"
   location    = "us-central1"
 
@@ -46,10 +61,7 @@ resource "google_cloudbuild_trigger" "apply" {
   }
 
   substitutions = {
-    _NAMING_CONVENTION_ENVIRONMENT_CODE = var.naming_convention.environment_code
-    _NAMING_CONVENTION_PREFIX           = var.naming_convention.prefix
-    _NAMING_CONVENTION_SUFFIX           = var.naming_convention.suffix
-    _NAMING_CONVENTION_PROJECT          = var.naming_convention.project
-    _TFSTATE_BUCKET                     = var.tfstate_bucket
+    _ENVIRONMENT    = var.environment
+    _TFSTATE_BUCKET = var.tfstate_bucket
   }
 }

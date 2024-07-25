@@ -1,17 +1,13 @@
 steps:
   - name: "hashicorp/terraform"
-    id: terraform-networking-apply
-    dir: infra/terraform/networking
+    id: terraform-deploy-apply
     script: |
-      terraform init -backend-config=bucket=$TFSTATE_BUCKET
+      terraform -chdir=infra/terraform/deploy/environments/${ENVIRONMENT} init -backend-config=bucket=$TFSTATE_BUCKET
 
-      terraform apply -lock-timeout=60m --auto-approve
+      terraform -chdir=infra/terraform/deploy/environments/${ENVIRONMENT} apply -lock-timeout=60m --auto-approve
     env:
       - "TFSTATE_BUCKET=${_TFSTATE_BUCKET}"
-      - "TF_VAR_naming_convention_environment_code=${_NAMING_CONVENTION_ENVIRONMENT_CODE}"
-      - "TF_VAR_naming_convention_prefix=${_NAMING_CONVENTION_PREFIX}"
-      - "TF_VAR_naming_convention_suffix=${_NAMING_CONVENTION_SUFFIX}"
-      - "TF_VAR_naming_convention_project=${_NAMING_CONVENTION_PROJECT}"
+      - "ENVIRONMENT=${_ENVIRONMENT}"
       - "TF_VAR_project_id=${PROJECT_ID}"
 options:
   logging: CLOUD_LOGGING_ONLY

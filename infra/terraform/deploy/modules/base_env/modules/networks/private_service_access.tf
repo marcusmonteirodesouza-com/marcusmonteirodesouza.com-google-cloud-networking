@@ -1,5 +1,13 @@
+module "global_address_private_service_access_naming" {
+  source = "../../../../../modules/naming"
+
+  description = "privsvccaccess"
+  environment = var.environment
+  resource    = "global-address"
+}
+
 resource "google_compute_global_address" "private_service_access_address" {
-  name          = "${local.naming_prefix}-glbaddr-privsvccaccess-${var.naming_convention.suffix}"
+  name          = module.global_address_private_service_access_naming.name
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
